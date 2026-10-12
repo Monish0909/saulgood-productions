@@ -7,6 +7,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { About } from "@/components/sections/About";
 import { Specialisation } from "@/components/sections/Specialisation";
+import { CreativeStandard } from "@/components/sections/CreativeStandard";
 
 export default function Home() {
   return (
@@ -22,6 +23,9 @@ export default function Home() {
 
       {/* Specialisation Section */}
       <Specialisation />
+
+      {/* Creative Standard Section */}
+      <CreativeStandard />
 
       {/* Main Content Flow */}
       <main className="px-6 md:px-16 lg:px-24 max-w-7xl mx-auto flex flex-col gap-32 py-24 w-full">
