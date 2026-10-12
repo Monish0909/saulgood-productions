@@ -122,7 +122,7 @@ export function Nav() {
         }`}
       >
         <nav
-          className="nav-glass mx-auto flex h-20 w-full items-center justify-between px-6 md:px-12 lg:px-20"
+          className="nav-glass mx-auto flex h-20 w-full items-center justify-between px-4 sm:px-6 md:px-12 lg:px-20"
           aria-label="Main Navigation"
         >
           {/* Wordmark Left */}
@@ -132,7 +132,7 @@ export function Nav() {
               e.preventDefault();
               scrollTo(0);
             }}
-            className="group flex flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
+            className="group flex flex-col justify-center min-h-[44px] min-w-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
           >
             <span className="font-serif text-xl md:text-2xl font-light tracking-[0.22em] text-theme-ink transition-opacity group-hover:opacity-80">
               SAULGOOD
@@ -143,13 +143,13 @@ export function Nav() {
           </a>
 
           {/* Desktop Nav Items */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden md:flex items-center gap-2 lg:gap-8">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="label text-[11px] text-theme-ink/80 transition-colors hover:text-theme-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
+                className="label text-[11px] min-h-[44px] px-3 inline-flex items-center text-theme-ink/80 transition-colors hover:text-theme-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
               >
                 {item.label}
               </a>
@@ -157,22 +157,22 @@ export function Nav() {
           </div>
 
           {/* CTA Right */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center">
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, "#contact")}
-              className="label text-[11px] rounded-none border border-theme-ink bg-theme-ink px-5 py-2.5 text-theme-bg transition-all hover:bg-transparent hover:text-theme-ink active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
+              className="label text-[11px] min-h-[44px] inline-flex items-center rounded-none border border-theme-ink bg-theme-ink px-6 text-theme-bg transition-all hover:bg-transparent hover:text-theme-ink active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent cursor-pointer"
             >
               Work With Us
             </a>
           </div>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Hamburger Button (Accessible 44x44 tap target) */}
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden flex flex-col items-center justify-center gap-1.5 p-2 text-theme-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            className="md:hidden flex h-11 w-11 flex-col items-center justify-center gap-1.5 p-2 text-theme-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent cursor-pointer"
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isMobileMenuOpen}
           >
             <span
@@ -202,7 +202,7 @@ export function Nav() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile Navigation"
-          className="fixed inset-0 z-50 flex flex-col justify-between bg-theme-bg/95 p-8 backdrop-blur-2xl transition-all"
+          className="fixed inset-0 z-50 flex flex-col justify-between bg-theme-bg/95 p-6 sm:p-8 backdrop-blur-2xl transition-all"
         >
           {/* Header in overlay with Close button */}
           <div className="flex items-center justify-between border-b border-theme-line pb-6">
@@ -212,7 +212,7 @@ export function Nav() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 text-theme-ink label text-xs uppercase tracking-widest focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 text-theme-ink label text-xs uppercase tracking-widest focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent cursor-pointer"
               aria-label="Close menu"
             >
               ✕ Close
@@ -220,13 +220,13 @@ export function Nav() {
           </div>
 
           {/* Mobile Navigation Links */}
-          <nav className="flex flex-col gap-6 py-12">
+          <nav className="flex flex-col gap-4 py-8">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="font-serif text-3xl font-light tracking-wide text-theme-ink transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
+                className="font-serif text-3xl font-light tracking-wide text-theme-ink py-2 min-h-[44px] flex items-center transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
               >
                 {item.label}
               </a>
@@ -238,7 +238,7 @@ export function Nav() {
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, "#contact")}
-              className="label text-center py-4 bg-theme-ink text-theme-bg tracking-widest transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
+              className="label text-center min-h-[48px] flex items-center justify-center bg-theme-ink text-theme-bg tracking-widest transition-opacity hover:opacity-90 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
             >
               Work With Us
             </a>

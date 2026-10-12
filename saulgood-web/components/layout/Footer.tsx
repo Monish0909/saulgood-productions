@@ -12,7 +12,7 @@ export function Footer() {
 
   return (
     <footer
-      className="w-full border-t border-theme-line bg-theme-bg py-16 px-6 md:px-16 lg:px-24"
+      className="w-full border-t border-theme-line bg-theme-bg py-16 px-4 sm:px-6 md:px-16 lg:px-24"
       aria-label="Site Footer"
     >
       <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-start md:items-end justify-between gap-12">
@@ -31,7 +31,7 @@ export function Footer() {
             {copy.footer.tagline}
           </p>
 
-          <p className="text-xs font-mono uppercase tracking-widest text-theme-muted/80">
+          <p className="text-xs font-mono uppercase tracking-widest text-theme-muted">
             {copy.footer.propertyTypes}
           </p>
         </div>
@@ -41,7 +41,7 @@ export function Footer() {
           <p className="text-xs font-mono text-theme-muted tracking-wider">
             © {currentYear} {copy.brand.legalName}. All Rights Reserved.
           </p>
-          <span className="text-[10px] font-mono tracking-widest text-theme-muted/60 uppercase">
+          <span className="text-[10px] font-mono tracking-widest text-theme-muted uppercase">
             {copy.brand.locationLine}
           </span>
         </div>
