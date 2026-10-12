@@ -5,6 +5,7 @@ import Image from "next/image";
 import { copy } from "@/content/copy";
 import { mediaManifest, MediaItem } from "@/content/media";
 import { Lightbox } from "@/components/ui/Lightbox";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -32,7 +33,7 @@ const categoryManifestMap: Record<string, { title: string; images: MediaItem[] }
 
 export function Work() {
   const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   // Lightbox state
   const [activeCategoryKey, setActiveCategoryKey] = useState<string | null>(null);
@@ -82,19 +83,19 @@ export function Work() {
         }
       }
 
-      // 2. 4 Category Cards Reveal
-      const cards = cardsRef.current?.querySelectorAll(".category-card");
-      if (cards?.length) {
+      // 2. Editorial Tiles Reveal
+      const tiles = gridRef.current?.querySelectorAll(".work-tile");
+      if (tiles?.length) {
         if (isReducedMotion) {
           gsap.fromTo(
-            cards,
+            tiles,
             { opacity: 0 },
             {
               opacity: 1,
               duration: 0.2,
               stagger: 0.05,
               scrollTrigger: {
-                trigger: cardsRef.current,
+                trigger: gridRef.current,
                 start: "top 85%",
                 toggleActions: "play none none none",
               },
@@ -102,7 +103,7 @@ export function Work() {
           );
         } else {
           gsap.fromTo(
-            cards,
+            tiles,
             { opacity: 0, y: 24 },
             {
               opacity: 1,
@@ -111,7 +112,7 @@ export function Work() {
               stagger: 0.08,
               ease: "power3.out",
               scrollTrigger: {
-                trigger: cardsRef.current,
+                trigger: gridRef.current,
                 start: "top 80%",
                 toggleActions: "play none none none",
               },
@@ -135,6 +136,10 @@ export function Work() {
     ? categoryManifestMap[activeCategoryKey]
     : categoryManifestMap["hotels"];
 
+  const categories = copy.work.categories;
+  const mainCategory = categories[0]; // 1 large tile (Hotels)
+  const secondaryCategories = categories.slice(1, 4); // 3 small tiles (Resorts, Villas, Experiences)
+
   return (
     <section
       ref={sectionRef}
@@ -152,17 +157,17 @@ export function Work() {
               </span>
             </div>
             <div className="work-header-reveal">
-              <h2 className="display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-theme-ink tracking-tight leading-[1.08]">
-                {copy.work.heading}
+              <h2 className="display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-theme-ink tracking-[-0.02em] leading-[1.02]">
+                Aesthetics that <span className="italic font-normal">speak</span> for themselves.
               </h2>
             </div>
             <div className="work-header-reveal">
-              <p className="font-serif text-xl sm:text-2xl text-theme-muted font-light italic leading-relaxed">
+              <p className="font-serif text-xl sm:text-2xl text-theme-muted font-light italic leading-relaxed max-w-[62ch]">
                 {copy.work.lead}
               </p>
             </div>
             <div className="work-header-reveal">
-              <p className="text-theme-muted text-sm md:text-base font-light leading-relaxed max-w-2xl">
+              <p className="text-theme-muted text-[17px] font-light leading-[1.7] max-w-[62ch]">
                 {copy.work.body}
               </p>
             </div>
@@ -170,40 +175,43 @@ export function Work() {
 
           {/* CTA: DISCOVER OUR PORTFOLIO */}
           <div className="work-header-reveal flex-shrink-0">
-            <button
-              type="button"
-              onClick={() => openLightbox("hotels")}
-              className="label inline-flex items-center gap-2 border border-theme-ink bg-theme-ink px-6 py-4 text-theme-bg text-[11px] font-medium tracking-widest transition-all duration-100 active:scale-[0.97] hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent cursor-pointer"
-            >
-              <span>{copy.work.cta}</span>
-              <span className="text-xs">↗</span>
-            </button>
+            <Magnetic>
+              <button
+                type="button"
+                onClick={() => openLightbox(mainCategory.id)}
+                className="label inline-flex items-center gap-2 border border-theme-ink bg-theme-ink px-6 py-4 text-theme-bg text-[11px] font-normal tracking-[0.22em] transition-all duration-100 active:scale-[0.97] hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent cursor-pointer"
+              >
+                <span>{copy.work.cta}</span>
+                <span className="text-xs">↗</span>
+              </button>
+            </Magnetic>
           </div>
         </div>
 
-        {/* 4 CategoryCards as tall image tiles in a grid (Desktop: 2x2 or 4-col, Mobile: 1-col) */}
+        {/* Editorial Grid: 1 Large Tile (col-span-12 lg:col-span-7) + 3 Small Tiles (col-span-12 lg:col-span-5) */}
         <div
-          ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          ref={gridRef}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
         >
-          {copy.work.categories.map((cat, index) => {
-            const data = categoryManifestMap[cat.id] || categoryManifestMap["hotels"];
+          {/* 1. Large Feature Tile */}
+          {(() => {
+            const data = categoryManifestMap[mainCategory.id] || categoryManifestMap["hotels"];
             const coverImage = data.images[0];
 
             return (
               <div
-                key={cat.id}
+                key={mainCategory.id}
                 role="button"
                 tabIndex={0}
-                aria-label={`Open ${cat.title} gallery`}
-                onClick={() => openLightbox(cat.id)}
+                aria-label={`Open ${data.title} gallery`}
+                onClick={() => openLightbox(mainCategory.id)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    openLightbox(cat.id);
+                    openLightbox(mainCategory.id);
                   }
                 }}
-                className="category-card group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-ink focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg relative flex flex-col justify-between overflow-hidden border border-theme-line bg-theme-surface aspect-[3/4] md:aspect-[2/3] transition-all hover:border-theme-accent active:scale-[0.98]"
+                className="work-tile group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-ink lg:col-span-7 relative flex flex-col justify-between overflow-hidden border border-theme-line bg-theme-surface aspect-[4/5] lg:aspect-auto lg:min-h-[640px] shadow-sm transition-all hover:border-theme-accent active:scale-[0.99]"
               >
                 {/* Background Image with Hover Scale 1.04 */}
                 <div className="absolute inset-0 overflow-hidden">
@@ -211,42 +219,107 @@ export function Work() {
                     src={coverImage.src}
                     alt={coverImage.alt}
                     fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                    sizes="(max-width: 1024px) 100vw, 60vw"
                   />
-                  {/* Subtle dark gradient overlay for legibility */}
+                  {/* Subtle dark gradient overlay */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/20 transition-opacity group-hover:opacity-90"
+                    className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10 transition-opacity group-hover:opacity-95"
                     aria-hidden="true"
                   />
                 </div>
 
-                {/* Top index & badge */}
-                <div className="relative z-10 p-6 flex items-center justify-between">
-                  <span className="label text-[10px] text-white/70 tracking-widest">
-                    0{index + 1}
+                {/* Top Badge */}
+                <div className="relative z-10 p-8 flex items-center justify-between">
+                  <span className="label text-[11px] text-white/80 tracking-widest">
+                    01 · FEATURED EDITORIAL
                   </span>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-theme-photo-accent bg-black/40 px-2.5 py-1 backdrop-blur-sm border border-white/10">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-theme-photo-accent bg-black/50 px-3 py-1.5 backdrop-blur-md border border-white/10">
                     {data.images.length} FRAMES
                   </span>
                 </div>
 
-                {/* Bottom title & tagline */}
-                <div className="relative z-10 p-6 flex flex-col gap-2">
-                  <h3 className="font-serif text-2xl md:text-3xl font-light text-white tracking-tight group-hover:text-theme-photo-ink">
-                    {cat.title}
+                {/* Bottom Caption Slide-Up */}
+                <div className="relative z-10 p-8 flex flex-col gap-3 transition-transform duration-500 ease-out translate-y-2 group-hover:translate-y-0">
+                  <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight">
+                    {mainCategory.title}
                   </h3>
-                  <p className="font-serif text-sm text-white/80 italic line-clamp-2">
-                    {cat.description}
+                  <p className="font-serif text-lg text-white/90 italic max-w-xl">
+                    {mainCategory.description}
                   </p>
-                  <div className="pt-2 flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-widest text-theme-photo-accent">
-                    <span>VIEW GALLERY</span>
-                    <span className="transition-transform group-hover:translate-x-1">→</span>
+                  <div className="pt-2 flex items-center gap-2 text-xs uppercase font-mono tracking-widest text-theme-photo-accent transition-opacity opacity-80 group-hover:opacity-100">
+                    <span>EXPLORE COLLECTION</span>
+                    <span className="transition-transform group-hover:translate-x-1.5">→</span>
                   </div>
                 </div>
               </div>
             );
-          })}
+          })()}
+
+          {/* 2. Three Small Tiles Stacked in the Right Column */}
+          <div className="lg:col-span-5 flex flex-col gap-6 justify-between">
+            {secondaryCategories.map((cat, index) => {
+              const data = categoryManifestMap[cat.id] || categoryManifestMap["hotels"];
+              const coverImage = data.images[0];
+              const displayNumber = `0${index + 2}`;
+
+              return (
+                <div
+                  key={cat.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Open ${data.title} gallery`}
+                  onClick={() => openLightbox(cat.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      openLightbox(cat.id);
+                    }
+                  }}
+                  className="work-tile group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-ink relative flex flex-col justify-between overflow-hidden border border-theme-line bg-theme-surface aspect-[16/9] lg:aspect-[16/8] shadow-sm transition-all hover:border-theme-accent active:scale-[0.99]"
+                >
+                  {/* Background Image with Hover Scale 1.04 */}
+                  <div className="absolute inset-0 overflow-hidden">
+                    <Image
+                      src={coverImage.src}
+                      alt={coverImage.alt}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                      sizes="(max-width: 1024px) 100vw, 40vw"
+                    />
+                    <div
+                      className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15 transition-opacity group-hover:opacity-95"
+                      aria-hidden="true"
+                    />
+                  </div>
+
+                  {/* Top Badge */}
+                  <div className="relative z-10 p-5 sm:p-6 flex items-center justify-between">
+                    <span className="label text-[10px] text-white/80 tracking-widest">
+                      {displayNumber}
+                    </span>
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-theme-photo-accent bg-black/50 px-2.5 py-1 backdrop-blur-md border border-white/10">
+                      {data.images.length} FRAMES
+                    </span>
+                  </div>
+
+                  {/* Bottom Caption Slide-Up */}
+                  <div className="relative z-10 p-5 sm:p-6 flex flex-col gap-1.5 transition-transform duration-500 ease-out translate-y-1.5 group-hover:translate-y-0">
+                    <h3 className="font-serif text-2xl font-light text-white tracking-tight">
+                      {cat.title}
+                    </h3>
+                    <p className="font-serif text-sm text-white/85 italic line-clamp-1">
+                      {cat.description}
+                    </p>
+                    <div className="pt-1 flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-widest text-theme-photo-accent">
+                      <span>VIEW GALLERY</span>
+                      <span className="transition-transform group-hover:translate-x-1">→</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 

@@ -2,7 +2,8 @@
 
 import React, { useEffect, useRef } from "react";
 import { copy } from "@/content/copy";
-import { useSmoothScroll } from "@/components/layout/SmoothScrollProvider";
+import { usePageTransition } from "@/components/layout/PageTransition";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -18,7 +19,7 @@ const frameSrc = (i: number) => `/media/frames/f_${String(i + 1).padStart(4, "0"
  * Reduced motion: static first frame, no pin.
  */
 export function Hero() {
-  const { scrollTo } = useSmoothScroll();
+  const { navigate } = usePageTransition();
   const wrapRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -135,8 +136,9 @@ export function Hero() {
   }, []);
 
   const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
-    scrollTo(href);
+    navigate(href);
   };
 
   const words = copy.hero.headline.split(" ");
@@ -145,7 +147,7 @@ export function Hero() {
     <section aria-label="Hero Section">
       {/* Tall wrapper = scroll distance for the scrub (collapses to 100svh with reduced motion) */}
       <div ref={wrapRef} className="relative h-[380vh] motion-reduce:h-[100svh]">
-        <div ref={stageRef} className="sticky top-0 h-[100svh] w-full overflow-hidden bg-[#1a1612]">
+        <div ref={stageRef} className="sticky top-0 h-[100svh] w-full overflow-hidden bg-theme-hero-fallback">
           <canvas
             ref={canvasRef}
             className="hero-canvas absolute inset-0 h-full w-full"
@@ -155,7 +157,7 @@ export function Hero() {
           {/* Even scrim + bottom-left gradient: keeps text >= 4.5:1 on any frame */}
           <div className="absolute inset-0 bg-theme-scrim pointer-events-none" aria-hidden="true" />
           <div
-            className="absolute inset-0 pointer-events-none bg-[linear-gradient(to_top,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.66)_45%,rgba(0,0,0,0.44)_75%,rgba(0,0,0,0.30)_100%)]"
+            className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_90%_110%_at_10%_100%,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.44)_55%,rgba(0,0,0,0)_100%)]"
             aria-hidden="true"
           />
 
@@ -163,40 +165,49 @@ export function Hero() {
             ref={textRef}
             className="absolute inset-x-0 bottom-0 mx-auto flex max-w-[88rem] [text-shadow:0_1px_22px_rgba(0,0,0,0.35)] flex-col gap-7 px-5 pb-16 text-theme-photo-ink sm:px-10 md:pb-20 lg:px-20"
           >
-            <span className="hero-reveal label text-theme-photo-ink/90 tracking-[0.24em]">
+            <span className="hero-reveal label text-theme-photo-ink tracking-[0.24em] [text-shadow:0_0_14px_rgba(0,0,0,0.6)]">
               {copy.hero.eyebrow}
             </span>
 
-            <h1 className="display max-w-5xl font-light text-balance" aria-label={copy.hero.headline}>
-              {words.map((w, i) => (
-                <span key={i} className="inline-block overflow-hidden pb-[0.12em] align-bottom" aria-hidden="true">
-                  <span className="hero-word inline-block will-change-transform">{w}</span>
-                  {i < words.length - 1 ? " " : ""}
-                </span>
-              ))}
+            <h1 className="display max-w-5xl font-light text-balance text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.02] tracking-[-0.02em]" aria-label={copy.hero.headline}>
+              {words.map((w, i) => {
+                const isItalic = w.toLowerCase().replace(/[^a-z]/g, "") === "elevated";
+                return (
+                  <span key={i} className="inline-block overflow-hidden pb-[0.12em] align-bottom" aria-hidden="true">
+                    <span className={`hero-word inline-block will-change-transform ${isItalic ? "italic font-normal" : "font-light"}`}>
+                      {w}
+                    </span>
+                    {i < words.length - 1 ? " " : ""}
+                  </span>
+                );
+              })}
             </h1>
 
             <div className="hero-rule h-px w-24 origin-left bg-theme-photo-accent" aria-hidden="true" />
 
             <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-              <p className="hero-reveal max-w-xl text-sm font-light leading-relaxed text-theme-photo-ink/90 md:text-base">
+              <p className="hero-reveal max-w-[62ch] text-[17px] font-light leading-[1.7] text-theme-photo-ink/90">
                 {copy.hero.body}
               </p>
               <div className="hero-reveal flex flex-wrap items-center gap-4">
-                <a
-                  href={copy.hero.ctaPrimary.href}
-                  onClick={(e) => handleCtaClick(e, copy.hero.ctaPrimary.href)}
-                  className="label inline-flex min-h-[48px] items-center justify-center border border-theme-photo-ink bg-theme-photo-ink px-8 text-[11px] font-medium tracking-widest text-theme-ink transition-all duration-100 hover:bg-transparent hover:text-theme-photo-ink active:scale-[0.97] focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-photo-ink focus-visible:ring-offset-2 focus-visible:ring-offset-black/40"
-                >
-                  {copy.hero.ctaPrimary.label}
-                </a>
-                <a
-                  href={copy.hero.ctaSecondary.href}
-                  onClick={(e) => handleCtaClick(e, copy.hero.ctaSecondary.href)}
-                  className="label inline-flex min-h-[48px] items-center justify-center border border-theme-photo-ink/60 px-8 text-[11px] font-medium tracking-widest text-theme-photo-ink transition-all duration-100 hover:border-theme-photo-ink hover:bg-theme-photo-ink/10 active:scale-[0.97] focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-photo-ink focus-visible:ring-offset-2 focus-visible:ring-offset-black/40"
-                >
-                  {copy.hero.ctaSecondary.label}
-                </a>
+                <Magnetic>
+                  <a
+                    href={copy.hero.ctaPrimary.href}
+                    onClick={(e) => handleCtaClick(e, copy.hero.ctaPrimary.href)}
+                    className="label inline-flex min-h-[48px] items-center justify-center border border-theme-photo-ink bg-theme-photo-ink px-8 text-[11px] font-normal tracking-[0.22em] text-theme-ink transition-all duration-100 hover:bg-transparent hover:text-theme-photo-ink active:scale-[0.97] focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-photo-ink focus-visible:ring-offset-2 focus-visible:ring-offset-black/40"
+                  >
+                    {copy.hero.ctaPrimary.label}
+                  </a>
+                </Magnetic>
+                <Magnetic>
+                  <a
+                    href={copy.hero.ctaSecondary.href}
+                    onClick={(e) => handleCtaClick(e, copy.hero.ctaSecondary.href)}
+                    className="label inline-flex min-h-[48px] items-center justify-center border border-theme-photo-ink/60 px-8 text-[11px] font-normal tracking-[0.22em] text-theme-photo-ink transition-all duration-100 hover:border-theme-photo-ink hover:bg-theme-photo-ink/10 active:scale-[0.97] focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-photo-ink focus-visible:ring-offset-2 focus-visible:ring-offset-black/40"
+                  >
+                    {copy.hero.ctaSecondary.label}
+                  </a>
+                </Magnetic>
               </div>
             </div>
           </div>

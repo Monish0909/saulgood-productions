@@ -1,7 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useSmoothScroll } from "./SmoothScrollProvider";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { usePageTransition } from "./PageTransition";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 interface NavItem {
   label: string;
@@ -9,14 +12,15 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/work" },
+  { label: "Services", href: "/services" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Nav() {
-  const { scrollTo } = useSmoothScroll();
+  const { navigate } = usePageTransition();
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const lastScrollYRef = useRef(0);
@@ -111,9 +115,10 @@ export function Nav() {
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
   ) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
     setIsMobileMenuOpen(false);
-    scrollTo(href);
+    navigate(href);
   };
 
   return (
@@ -129,12 +134,10 @@ export function Nav() {
           aria-label="Main Navigation"
         >
           {/* Wordmark Left */}
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollTo(0);
-            }}
+          <Link
+            href="/"
+            aria-label="SaulGood Productions, home"
+            onClick={(e) => handleNavClick(e, "/")}
             className="group flex flex-col justify-center min-h-[44px] min-w-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
           >
             <span className="font-serif text-xl md:text-2xl font-light tracking-[0.22em] text-theme-ink transition-opacity group-hover:opacity-80">
@@ -143,31 +146,34 @@ export function Nav() {
             <span className="text-[9px] uppercase tracking-[0.25em] text-theme-muted font-sans -mt-1">
               PRODUCTIONS
             </span>
-          </a>
+          </Link>
 
-          {/* Desktop Nav Items */}
+          {/* Desktop Nav Items with Underline Draw */}
           <div className="hidden md:flex items-center gap-2 lg:gap-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
+                aria-current={pathname === item.href ? "page" : undefined}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="label text-[11px] min-h-[44px] px-3 inline-flex items-center text-theme-ink/80 transition-colors hover:text-theme-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
+                className="nav-link-underline label text-[11px] min-h-[44px] px-3 inline-flex items-center text-theme-ink/80 transition-colors hover:text-theme-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
 
-          {/* CTA Right */}
+          {/* Magnetic CTA Right */}
           <div className="hidden md:flex items-center">
-            <a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, "#contact")}
-              className="label text-[11px] min-h-[44px] inline-flex items-center rounded-none border border-theme-ink bg-theme-ink px-6 text-theme-bg transition-all hover:bg-transparent hover:text-theme-ink active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent cursor-pointer"
-            >
-              Work With Us
-            </a>
+            <Magnetic>
+              <Link
+                href="/contact"
+                onClick={(e) => handleNavClick(e, "/contact")}
+                className="label text-[11px] font-normal tracking-[0.22em] min-h-[44px] inline-flex items-center rounded-none border border-theme-ink bg-theme-ink px-6 text-theme-bg transition-all hover:bg-transparent hover:text-theme-ink active:scale-[0.97] focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent cursor-pointer"
+              >
+                Work With Us
+              </Link>
+            </Magnetic>
           </div>
 
           {/* Mobile Hamburger Button (Accessible 44x44 tap target) */}
@@ -226,26 +232,27 @@ export function Nav() {
           {/* Mobile Navigation Links */}
           <nav className="flex flex-col gap-4 py-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
+                aria-current={pathname === item.href ? "page" : undefined}
                 onClick={(e) => handleNavClick(e, item.href)}
                 className="font-serif text-3xl font-light tracking-wide text-theme-ink py-2 min-h-[44px] flex items-center transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* Mobile CTA & Footer Info */}
           <div className="flex flex-col gap-4 border-t border-theme-line pt-6">
-            <a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, "#contact")}
+            <Link
+              href="/contact"
+              onClick={(e) => handleNavClick(e, "/contact")}
               className="label text-center min-h-[48px] flex items-center justify-center bg-theme-ink text-theme-bg tracking-widest transition-opacity hover:opacity-90 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
             >
               Work With Us
-            </a>
+            </Link>
             <p className="text-center text-xs text-theme-muted tracking-wider">
               HOSPITALITY VISUAL PRODUCTION STUDIO
             </p>

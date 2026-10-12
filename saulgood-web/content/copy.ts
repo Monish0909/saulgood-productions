@@ -121,21 +121,21 @@ export const copy: CopyModel = {
     copyrightNotice: "© {year} SaulGood Productions LLP. All Rights Reserved.",
   },
   hero: {
-    headline: "HOSPITALITY, ELEVATED THROUGH VISUALS.",
+    headline: "Hospitality, elevated through visuals.",
     eyebrow: "Premium Hospitality Photography · Cinematic Videography · Aerial Visuals",
     body: "We create sophisticated visual experiences for hotels, resorts, villas and hospitality brands. Through exceptional aesthetics, thoughtful composition and cinematic storytelling, we transform spaces into visuals that inspire, captivate and leave a lasting impression.",
     ctaPrimary: {
       label: "EXPLORE OUR WORK",
-      href: "#work",
+      href: "/work",
     },
     ctaSecondary: {
       label: "WORK WITH US",
-      href: "#contact",
+      href: "/contact",
     },
   },
   philosophy: {
     label: "OUR PHILOSOPHY",
-    heading: "BEAUTY IS IN THE DETAILS. EXCELLENCE IS IN EVERY FRAME.",
+    heading: "Beauty is in the details. Excellence is in every frame.",
     lead: "In hospitality, the smallest details shape the biggest impressions.",
     paragraphs: [
       "The interplay of natural light and architecture. The textures that define a space. The stillness of a perfectly designed suite. The expansive beauty of a destination.",
@@ -146,7 +146,7 @@ export const copy: CopyModel = {
   },
   about: {
     label: "ABOUT US",
-    heading: "A VISUAL STUDIO DEDICATED TO HOSPITALITY.",
+    heading: "A visual studio dedicated to hospitality.",
     paragraphs: [
       "SaulGood Productions is a specialist hospitality visual production studio focused on creating premium photography and videography for hotels, resorts, luxury villas and hospitality properties.",
       "With over seven years of production experience, we approach every project with a commitment to visual excellence, aesthetic consistency and meticulous execution.",
@@ -158,13 +158,13 @@ export const copy: CopyModel = {
   },
   specialisation: {
     label: "OUR SPECIALISATION",
-    heading: "HOSPITALITY, THROUGH A MORE REFINED LENS.",
+    heading: "Hospitality, through a more refined lens.",
     lead: "We work exclusively within hospitality, bringing a focused creative perspective to every property we capture.",
     services: [
       {
         id: "hospitality-photography",
         number: "01",
-        title: "HOSPITALITY PHOTOGRAPHY",
+        title: "Hospitality photography",
         tagline: "Spaces captured with precision. Details captured with intention.",
         body: "We create high-end hospitality photography that highlights the architecture, interiors, design details and defining features of a property. Our approach combines considered composition, balanced lighting, accurate colour and refined post-production to deliver imagery that feels elegant, immersive and true to the experience.",
         tags: [
@@ -179,7 +179,7 @@ export const copy: CopyModel = {
       {
         id: "cinematic-videography",
         number: "02",
-        title: "CINEMATIC VIDEOGRAPHY",
+        title: "Cinematic videography",
         tagline: "Not just a view of the property. A feeling of being there.",
         body: "Our hospitality films bring spaces to life through cinematic movement, thoughtful framing, atmosphere and visual storytelling. From elegant property walkthroughs to immersive resort films, every sequence is crafted to showcase the experience, character and visual identity of the destination.",
         tags: [
@@ -194,7 +194,7 @@ export const copy: CopyModel = {
       {
         id: "aerial-visuals",
         number: "03",
-        title: "AERIAL PHOTOGRAPHY & VIDEOGRAPHY",
+        title: "Aerial photography & videography",
         tagline: "A different perspective. An extraordinary impression.",
         body: "We capture the scale, setting and surroundings of hospitality properties through carefully composed aerial imagery. From architectural overviews to expansive resort landscapes, our aerial work adds depth, context and cinematic impact to a property's visual identity.",
         tags: [
@@ -209,7 +209,7 @@ export const copy: CopyModel = {
   },
   creativeStandard: {
     label: "OUR CREATIVE STANDARD",
-    heading: "PREMIUM IS NOT A FILTER. IT IS A PROCESS.",
+    heading: "Premium is not a filter. It is a process.",
     lead: "Premium visual work is built long before the final image is delivered.",
     paragraphs: [
       "It begins with understanding the space, recognising its strongest visual qualities and knowing how to translate them into compelling imagery.",
@@ -218,37 +218,37 @@ export const copy: CopyModel = {
     pillars: [
       {
         id: 1,
-        title: "AESTHETIC SENSIBILITY",
+        title: "Aesthetic sensibility",
         description:
           "A refined visual language built around balance, proportion, light, texture and composition.",
       },
       {
         id: 2,
-        title: "LIGHT & COMPOSITION",
+        title: "Light & composition",
         description:
           "Carefully considered framing and lighting that bring out the natural character and architectural beauty of every space.",
       },
       {
         id: 3,
-        title: "CINEMATIC EXECUTION",
+        title: "Cinematic execution",
         description:
           "Fluid camera movement, intentional sequencing and visual consistency that make our films immersive and sophisticated.",
       },
       {
         id: 4,
-        title: "METICULOUS POST-PRODUCTION",
+        title: "Meticulous post-production",
         description:
           "Professional editing, detailed retouching and considered colour grading to achieve a polished, cohesive finish.",
       },
       {
         id: 5,
-        title: "ATTENTION TO DETAIL",
+        title: "Attention to detail",
         description:
           "A commitment to capturing the small details that distinguish an ordinary visual from an exceptional one.",
       },
       {
         id: 6,
-        title: "CONSISTENCY IN QUALITY",
+        title: "Consistency in quality",
         description:
           "The same level of care and creative intent across every deliverable, from individual photographs to complete property campaigns.",
       },
@@ -256,29 +256,29 @@ export const copy: CopyModel = {
   },
   work: {
     label: "OUR WORK",
-    heading: "AESTHETICS THAT SPEAK FOR THEMSELVES.",
+    heading: "Aesthetics that speak for themselves.",
     lead: "A curated selection of hospitality properties captured through our lens.",
     body: "Every project is an opportunity to explore the relationship between architecture, atmosphere, design and experience.",
     cta: "DISCOVER OUR PORTFOLIO",
     categories: [
       {
         id: "hotels",
-        title: "HOTELS",
+        title: "Hotels",
         description: "Distinctive spaces. Thoughtfully captured.",
       },
       {
         id: "resorts",
-        title: "RESORTS",
+        title: "Resorts",
         description: "Exceptional destinations. Immersive visual stories.",
       },
       {
         id: "luxury-villas",
-        title: "LUXURY VILLAS",
+        title: "Luxury villas",
         description: "Intimate details. Elevated aesthetics.",
       },
       {
         id: "hospitality-experiences",
-        title: "HOSPITALITY EXPERIENCES",
+        title: "Hospitality experiences",
         description:
           "The atmosphere, character and details that make a stay memorable.",
       },
@@ -286,65 +286,65 @@ export const copy: CopyModel = {
   },
   approach: {
     label: "OUR APPROACH",
-    heading: "FROM THE FIRST FRAME TO THE FINAL FINISH.",
+    heading: "From the first frame to the final finish.",
     steps: [
       {
         step: "01",
-        title: "UNDERSTAND",
+        title: "Understand",
         description:
           "We study the property, its design language, positioning and intended audience.",
       },
       {
         step: "02",
-        title: "ENVISION",
+        title: "Envision",
         description:
           "We establish a creative direction that highlights the property's strongest visual characteristics.",
       },
       {
         step: "03",
-        title: "CAPTURE",
+        title: "Capture",
         description:
           "We execute photography, videography and aerial production with precision and attention to detail.",
       },
       {
         step: "04",
-        title: "PERFECT",
+        title: "Perfect",
         description:
           "We refine every selected image and film through professional post-production, ensuring a cohesive, premium aesthetic.",
       },
       {
         step: "05",
-        title: "DELIVER",
+        title: "Deliver",
         description:
           "We provide polished, high-quality visual assets ready for websites, booking platforms, digital campaigns and brand communication.",
       },
     ],
   },
   whySaulGood: {
-    heading: "A SPECIALIST EYE. AN UNCOMPROMISING STANDARD.",
+    heading: "A specialist eye. An uncompromising standard.",
     points: [
       {
-        title: "HOSPITALITY IS OUR SPECIALITY.",
+        title: "Hospitality is our speciality.",
         description:
           "A focused understanding of the visual requirements of hospitality properties and the experiences they offer.",
       },
       {
-        title: "AESTHETICS COME FIRST.",
+        title: "Aesthetics come first.",
         description:
           "We prioritise visual harmony, sophisticated composition and a premium finish in every project.",
       },
       {
-        title: "QUALITY OVER CONVENTION.",
+        title: "Quality over convention.",
         description:
           "We approach each property with creative intent rather than relying on a one-size-fits-all production style.",
       },
       {
-        title: "ONE COHESIVE VISUAL LANGUAGE.",
+        title: "One cohesive visual language.",
         description:
           "Photography, videography and aerial imagery work together to create a consistent representation of your property.",
       },
       {
-        title: "BUILT FOR PREMIUM PRESENTATION.",
+        title: "Built for premium presentation.",
         description:
           "Our imagery is created to strengthen the way a property is perceived across its digital and marketing touchpoints.",
       },
@@ -352,7 +352,7 @@ export const copy: CopyModel = {
   },
   clients: {
     label: "OUR CLIENTS",
-    heading: "TRUSTED TO CAPTURE EXCEPTIONAL SPACES.",
+    heading: "Trusted to capture exceptional spaces.",
     body: "We collaborate with hospitality brands and property teams to create visual content that reflects the quality, character and experience of their properties.",
     briefNote:
       "Display verified hospitality clients here, supported by selected project imagery.",
@@ -361,7 +361,7 @@ export const copy: CopyModel = {
   },
   contact: {
     label: "LET'S CREATE SOMETHING EXCEPTIONAL.",
-    heading: "YOUR PROPERTY DESERVES AN EXTRAORDINARY PRESENTATION.",
+    heading: "Your property deserves an extraordinary presentation.",
     lead: "Great hospitality deserves great visuals.",
     body: "If you believe in thoughtful design, exceptional experiences and the power of aesthetics, we'd love to collaborate.",
     closer:

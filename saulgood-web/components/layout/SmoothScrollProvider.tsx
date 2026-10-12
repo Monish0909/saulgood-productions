@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 interface SmoothScrollContextType {
   scrollTo: (
     target: string | number | HTMLElement,
-    options?: { offset?: number; duration?: number }
+    options?: { offset?: number; duration?: number; immediate?: boolean }
   ) => void;
 }
 
@@ -58,18 +58,18 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
   const scrollTo = (
     target: string | number | HTMLElement,
-    options?: { offset?: number; duration?: number }
+    options?: { offset?: number; duration?: number; immediate?: boolean }
   ) => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isAnchor = typeof target === "string" && target.startsWith("#");
     const offset = options?.offset ?? (isAnchor ? NAV_OFFSET : 0);
 
     if (lenisRef.current) {
-      lenisRef.current.scrollTo(target, { offset, duration: options?.duration ?? 1.2 });
+      lenisRef.current.scrollTo(target, { offset, duration: options?.duration ?? 1.2, immediate: options?.immediate });
       return;
     }
     // Native fallback (reduced motion / before Lenis mounts): instant, offset-aware
-    const behavior: ScrollBehavior = reduced ? "auto" : "smooth";
+    const behavior: ScrollBehavior = reduced || options?.immediate ? "auto" : "smooth";
     if (typeof target === "number") {
       window.scrollTo({ top: target, behavior });
       return;

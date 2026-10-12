@@ -2,6 +2,7 @@
 
 import React, { useSyncExternalStore } from "react";
 import { copy } from "@/content/copy";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function Footer() {
   // Server renders the fallback year; client swaps in the real one (no prerender Date read)
@@ -18,7 +19,7 @@ export function Footer() {
     >
       <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-start md:items-end justify-between gap-12">
         {/* Wordmark, Tagline, Property Types */}
-        <div className="flex flex-col gap-4">
+        <Reveal className="flex flex-col gap-4" start="top 98%">
           <div className="flex flex-col">
             <span className="font-serif text-2xl md:text-3xl font-light tracking-[0.22em] text-theme-ink">
               {copy.footer.brandName}
@@ -35,17 +36,17 @@ export function Footer() {
           <p className="text-xs font-mono uppercase tracking-widest text-theme-muted">
             {copy.footer.propertyTypes}
           </p>
-        </div>
+        </Reveal>
 
         {/* Dynamic Legal Copyright */}
-        <div className="flex flex-col items-start md:items-end gap-2 border-t md:border-t-0 border-theme-line/60 pt-6 md:pt-0 w-full md:w-auto">
+        <Reveal delay={0.15} start="top 98%" className="flex flex-col items-start md:items-end gap-2 border-t md:border-t-0 border-theme-line/60 pt-6 md:pt-0 w-full md:w-auto">
           <p suppressHydrationWarning className="text-xs font-mono text-theme-muted tracking-wider">
             © {currentYear} {copy.brand.legalName}. All Rights Reserved.
           </p>
           <span className="text-[10px] font-mono tracking-widest text-theme-muted uppercase">
             {copy.brand.locationLine}
           </span>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );

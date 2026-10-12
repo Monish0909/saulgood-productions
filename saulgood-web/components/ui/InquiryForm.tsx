@@ -261,7 +261,7 @@ export function InquiryForm() {
                 key={svc}
                 className={`flex items-center gap-2.5 cursor-pointer border px-4 py-2.5 text-xs transition-all active:scale-[0.98] ${
                   isChecked
-                    ? "border-theme-accent bg-theme-accent/10 text-theme-ink font-medium"
+                    ? "border-theme-accent bg-theme-accent/10 text-theme-ink font-normal"
                     : "border-theme-line bg-theme-bg/40 text-theme-muted hover:border-theme-ink/50"
                 }`}
               >
@@ -357,7 +357,7 @@ export function InquiryForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="label inline-flex items-center justify-center gap-2 border border-theme-ink bg-theme-ink px-8 py-4 text-theme-bg text-[11px] font-medium tracking-widest transition-all duration-100 active:scale-[0.97] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
+          className="label inline-flex items-center justify-center gap-2 border border-theme-ink bg-theme-ink px-8 py-4 text-theme-bg text-[11px] font-normal tracking-[0.22em] transition-all duration-100 active:scale-[0.97] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
         >
           {isSubmitting ? "SENDING…" : "SEND INQUIRY"}
         </button>

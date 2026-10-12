@@ -4,14 +4,21 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { copy } from "@/content/copy";
 import { mediaManifest } from "@/content/media";
+import { LogoLoop, type LogoItem } from "@/components/ui/LogoLoop";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const placeholderLogos: LogoItem[] = Array.from({ length: copy.clients.placeholderCount }, (_, i) => ({
+  title: `Client logo ${i + 1}`,
+}));
+
 export function Clients() {
   const sectionRef = useRef<HTMLElement>(null);
   const slotsRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const hairlineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const isReducedMotion = window.matchMedia(
@@ -19,7 +26,54 @@ export function Clients() {
     ).matches;
 
     const ctx = gsap.context(() => {
-      // 1. Header reveal
+      // 1. Heading masked word-by-word reveal
+      const words = headingRef.current?.querySelectorAll(".heading-word");
+      if (words?.length) {
+        if (isReducedMotion) {
+          gsap.set(words, { clearProps: "all" });
+        } else {
+          gsap.fromTo(
+            words,
+            { yPercent: 110, opacity: 0 },
+            {
+              yPercent: 0,
+              opacity: 1,
+              duration: 0.9,
+              stagger: 0.04,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: headingRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
+      }
+
+      // 2. Hairline draw-in
+      if (hairlineRef.current) {
+        if (isReducedMotion) {
+          gsap.set(hairlineRef.current, { clearProps: "all" });
+        } else {
+          gsap.fromTo(
+            hairlineRef.current,
+            { scaleX: 0 },
+            {
+              scaleX: 1,
+              duration: 1.1,
+              ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: hairlineRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
+      }
+
+      // 3. Header text reveal
       const headerItems = sectionRef.current?.querySelectorAll(".clients-header-reveal");
       if (headerItems?.length) {
         if (isReducedMotion) {
@@ -57,7 +111,7 @@ export function Clients() {
         }
       }
 
-      // 2. Client slots reveal
+      // 4. Client slots reveal
       const slots = slotsRef.current?.querySelectorAll(".client-slot");
       if (slots?.length) {
         if (isReducedMotion) {
@@ -99,6 +153,8 @@ export function Clients() {
     return () => ctx.revert();
   }, []);
 
+  const headingWords = copy.clients.heading.split(" ");
+
   return (
     <section
       ref={sectionRef}
@@ -114,13 +170,30 @@ export function Clients() {
               {copy.clients.label}
             </span>
           </div>
-          <div className="clients-header-reveal">
-            <h2 className="display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-theme-ink tracking-tight leading-[1.08]">
-              {copy.clients.heading}
+
+          <div className="max-w-4xl">
+            <h2
+              ref={headingRef}
+              className="display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-theme-ink tracking-[-0.02em] leading-[1.02]"
+              aria-label={copy.clients.heading}
+            >
+              {headingWords.map((word, i) => {
+                const cleanWord = word.toLowerCase().replace(/[^a-z]/g, "");
+                const isItalic = cleanWord === "exceptional";
+                return (
+                  <span key={i} className="inline-block overflow-hidden pb-[0.12em] align-bottom" aria-hidden="true">
+                    <span className={`heading-word inline-block will-change-transform ${isItalic ? "italic font-normal" : "font-light"}`}>
+                      {word}
+                    </span>
+                    {i < headingWords.length - 1 ? " " : ""}
+                  </span>
+                );
+              })}
             </h2>
           </div>
+
           <div className="clients-header-reveal">
-            <p className="text-theme-muted font-light leading-relaxed text-base md:text-lg max-w-2xl">
+            <p className="text-theme-muted font-light leading-[1.7] text-[17px] max-w-[62ch]">
               {copy.clients.body}
             </p>
           </div>
@@ -130,26 +203,41 @@ export function Clients() {
           BUILD RULE: Replace with verified client logos when supplied by client; never invent names.
           Display 6 neutral placeholder slots labelled "Client logo", monochrome, opacity .6.
         */}
-        <div
-          ref={slotsRef}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 border-t border-theme-line/70 pt-12"
-        >
-          {Array.from({ length: copy.clients.placeholderCount }).map((_, index) => (
-            <div
-              key={index}
-              className="client-slot group relative h-24 w-full flex items-center justify-center border border-theme-line bg-theme-surface/30 p-4 transition-all hover:bg-theme-surface/60 hover:border-theme-accent/60"
-            >
-              <div className="relative h-full w-full flex items-center justify-center opacity-60 transition-opacity group-hover:opacity-100 grayscale">
-                <Image
-                  src={mediaManifest.clientLogoPlaceholder.src}
-                  alt={mediaManifest.clientLogoPlaceholder.alt}
-                  width={140}
-                  height={50}
-                  className="object-contain"
-                />
-              </div>
+        <div className="w-full">
+          {/* Hairline that draws in */}
+          <div
+            ref={hairlineRef}
+            className="w-full h-px bg-theme-line/70 origin-left will-change-transform mb-12"
+            aria-hidden="true"
+          />
+
+          <div ref={slotsRef}>
+            <div className="client-slot">
+              <LogoLoop
+                logos={placeholderLogos}
+                speed={40}
+                gap={16}
+                logoHeight={96}
+                pauseOnHover
+                fadeOut
+                fadeOutColor="var(--bg)"
+                ariaLabel="Our clients (placeholders)"
+                renderItem={() => (
+                  <div className="flex h-24 w-56 items-center justify-center border border-theme-line bg-theme-surface/30 p-4">
+                    <div className="flex h-full w-full items-center justify-center opacity-60 grayscale">
+                      <Image
+                        src={mediaManifest.clientLogoPlaceholder.src}
+                        alt=""
+                        width={140}
+                        height={50}
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                )}
+              />
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

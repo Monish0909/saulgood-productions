@@ -1,23 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Hanken_Grotesk } from "next/font/google";
+import { Jost } from "next/font/google";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
+import { PageTransitionProvider } from "@/components/layout/PageTransition";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
-import { ScrollEffects } from "@/components/layout/ScrollEffects";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const jost = Jost({
+  variable: "--font-jost",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
-});
-
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -108,7 +102,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${hanken.variable} h-full antialiased`}
+      className={`${jost.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -126,12 +120,13 @@ export default function RootLayout({
           Skip to main content
         </a>
         <SmoothScrollProvider>
-          <ScrollEffects />
+          <PageTransitionProvider>
           <Nav />
           <main id="main-content" className="flex-1 w-full">
             {children}
           </main>
           <Footer />
+          </PageTransitionProvider>
         </SmoothScrollProvider>
       </body>
     </html>

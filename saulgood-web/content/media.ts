@@ -22,6 +22,8 @@ export interface MediaManifest {
   };
   work: Record<"hotels" | "resorts" | "villas" | "experiences", MediaItem[]>;
   approachBg: MediaItem;
+  /** One photo per Approach step (Understand → Deliver) */
+  approachSteps: MediaItem[];
   contactBg: MediaItem;
   clientLogoPlaceholder: {
     src: string;
@@ -257,6 +259,38 @@ export const mediaManifest: MediaManifest = {
     width: 1600,
     height: 1067,
   },
+  approachSteps: [
+    {
+      src: "/media/placeholder/architecture.jpg",
+      alt: "Architectural study of a property",
+      width: 1600,
+      height: 1067,
+    },
+    {
+      src: "/media/placeholder/suite-interior.jpg",
+      alt: "Suite interior styled for the camera",
+      width: 1600,
+      height: 1067,
+    },
+    {
+      src: "/media/placeholder/aerial-resort.jpg",
+      alt: "Coastline seen from the air",
+      width: 1600,
+      height: 1067,
+    },
+    {
+      src: "/media/placeholder/spa.jpg",
+      alt: "Treatment room detail, refined in post",
+      width: 1600,
+      height: 1067,
+    },
+    {
+      src: "/media/placeholder/villa-pool.jpg",
+      alt: "Villa and pool ready for delivery",
+      width: 1600,
+      height: 1067,
+    },
+  ],
   contactBg: {
     src: "/media/placeholder/architecture.jpg",
     alt: "Sculptural stone and shadow backdrop",

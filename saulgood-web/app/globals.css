@@ -9,10 +9,11 @@
     --accent: #B89B6A;
     --accent-ink: #7D6335; /* accent for text on --bg (>=4.5:1) */
     --photo-ink: #F6F2EA;  /* text on top of photography */
-    --danger: #B91C1C;
+    --hero-fallback: #1a1612;
+  --danger: #B91C1C;
     --success: #047857;
     --line: rgba(20, 17, 14, 0.18);
-    --scrim: rgba(10, 8, 6, 0.28);
+    --scrim: rgba(10, 8, 6, 0.36);
     --nav-bg: rgba(246, 242, 234, 0.78);
   }
 
@@ -41,8 +42,10 @@
   body {
     background-color: var(--bg);
     color: var(--ink);
-    font-family: var(--font-hanken), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.6;
+    font-family: var(--font-jost), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
     letter-spacing: 0;
     overflow-x: clip;
   }
@@ -57,34 +60,36 @@
   --color-theme-accent-ink: var(--accent-ink);
   --color-theme-photo-ink: var(--photo-ink);
   --color-theme-photo-accent: var(--accent);
+  --color-theme-hero-fallback: var(--hero-fallback);
   --color-theme-danger: var(--danger);
   --color-theme-success: var(--success);
   --color-theme-line: var(--line);
   --color-theme-scrim: var(--scrim);
 
-  --font-display: var(--font-cormorant);
-  --font-body: var(--font-hanken);
-  --font-serif: var(--font-cormorant), Georgia, serif;
-  --font-sans: var(--font-hanken), -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: var(--font-hanken), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: var(--font-jost);
+  --font-body: var(--font-jost);
+  --font-serif: var(--font-jost), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--font-jost), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-jost), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Custom Typography Scale Utilities */
 @layer components {
   .display {
-    font-family: var(--font-cormorant), Georgia, serif;
+    font-family: var(--font-jost), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: clamp(2.5rem, 7vw, 7rem);
-    line-height: 1.05;
+    font-weight: 300;
+    line-height: 1.02;
     letter-spacing: -0.02em;
   }
 }
 
 .label {
-  font-family: var(--font-hanken), -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.75rem;
+  font-family: var(--font-jost), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-weight: 500;
+  letter-spacing: 0.22em;
+  font-weight: 400;
 }
 
 /* Hero: soft centre vignette behind the headline (keeps edges bright) */
@@ -127,8 +132,8 @@
   [class*="animate-[cue"] { animation: none; }
 }
 
-/* Marquee ticker */
-.marquee-track { animation: marquee 48s linear infinite; }
+/* Marquee ticker: slow continuous sweep */
+.marquee-track { animation: marquee 52s linear infinite; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -136,4 +141,30 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
+}
+
+/* Nav link underline draw on hover */
+.nav-link-underline {
+  position: relative;
+}
+.nav-link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--ink);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-link-underline::after {
+    transition: none;
+  }
 }
