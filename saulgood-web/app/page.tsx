@@ -9,6 +9,8 @@ import { About } from "@/components/sections/About";
 import { Specialisation } from "@/components/sections/Specialisation";
 import { CreativeStandard } from "@/components/sections/CreativeStandard";
 import { Work } from "@/components/sections/Work";
+import { Approach } from "@/components/sections/Approach";
+import { WhySaulGood } from "@/components/sections/WhySaulGood";
 
 export default function Home() {
   return (
@@ -30,6 +32,12 @@ export default function Home() {
 
       {/* Work Section (Tall Tiles + Lightbox) */}
       <Work />
+
+      {/* Approach (5-Step Timeline) */}
+      <Approach />
+
+      {/* Why SaulGood Productions? */}
+      <WhySaulGood />
 
       {/* Main Content Flow */}
       <main className="px-6 md:px-16 lg:px-24 max-w-7xl mx-auto flex flex-col gap-32 py-24 w-full">
