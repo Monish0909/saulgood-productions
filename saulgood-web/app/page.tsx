@@ -6,6 +6,7 @@ import { mediaManifest } from "@/content/media";
 import { Hero } from "@/components/sections/Hero";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { About } from "@/components/sections/About";
+import { Specialisation } from "@/components/sections/Specialisation";
 
 export default function Home() {
   return (
@@ -19,26 +20,11 @@ export default function Home() {
       {/* About Section */}
       <About />
 
+      {/* Specialisation Section */}
+      <Specialisation />
+
       {/* Main Content Flow */}
       <main className="px-6 md:px-16 lg:px-24 max-w-7xl mx-auto flex flex-col gap-32 py-24 w-full">
-        {/* Services Section Anchor Target */}
-        <section id="services" className="border-t border-theme-line pt-16 flex flex-col gap-6">
-          <span className="label text-theme-accent">{copy.specialisation.label}</span>
-          <h2 className="display text-3xl md:text-5xl font-light text-theme-ink">
-            {copy.specialisation.heading}
-          </h2>
-          <p className="text-theme-muted max-w-2xl">{copy.specialisation.lead}</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
-            {copy.specialisation.services.map((svc) => (
-              <div key={svc.id} className="p-6 border border-theme-line bg-theme-surface/40 flex flex-col gap-4">
-                <span className="label text-theme-muted">{svc.number}</span>
-                <h3 className="font-serif text-xl text-theme-ink">{svc.title}</h3>
-                <p className="text-sm text-theme-muted">{svc.tagline}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* Work Section Anchor Target */}
         <section id="work" className="border-t border-theme-line pt-16 flex flex-col gap-6">
           <span className="label text-theme-accent">{copy.work.label}</span>
