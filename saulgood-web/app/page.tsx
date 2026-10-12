@@ -8,6 +8,7 @@ import { Philosophy } from "@/components/sections/Philosophy";
 import { About } from "@/components/sections/About";
 import { Specialisation } from "@/components/sections/Specialisation";
 import { CreativeStandard } from "@/components/sections/CreativeStandard";
+import { Work } from "@/components/sections/Work";
 
 export default function Home() {
   return (
@@ -27,25 +28,11 @@ export default function Home() {
       {/* Creative Standard Section */}
       <CreativeStandard />
 
+      {/* Work Section (Tall Tiles + Lightbox) */}
+      <Work />
+
       {/* Main Content Flow */}
       <main className="px-6 md:px-16 lg:px-24 max-w-7xl mx-auto flex flex-col gap-32 py-24 w-full">
-        {/* Work Section Anchor Target */}
-        <section id="work" className="border-t border-theme-line pt-16 flex flex-col gap-6">
-          <span className="label text-theme-accent">{copy.work.label}</span>
-          <h2 className="display text-3xl md:text-5xl font-light text-theme-ink">
-            {copy.work.heading}
-          </h2>
-          <p className="text-theme-muted max-w-2xl">{copy.work.lead}</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
-            {copy.work.categories.map((cat) => (
-              <div key={cat.id} className="p-6 border border-theme-line bg-theme-surface/40 flex flex-col gap-2">
-                <h3 className="font-serif text-xl text-theme-ink">{cat.title}</h3>
-                <p className="text-sm text-theme-muted">{cat.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* Client Logo Slot Proof */}
         <section className="flex flex-col gap-6 border-t border-theme-line pt-12">
           <div className="flex justify-between items-center">
