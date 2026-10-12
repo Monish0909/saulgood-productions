@@ -115,7 +115,7 @@ export function InquiryForm() {
       console.error(err);
       setStatusMessage({
         type: "error",
-        text: "Network error occurred. Please verify your connection.",
+        text: "Network error. Please try again or email saulgoodproductions@gmail.com.",
       });
     } finally {
       setIsSubmitting(false);
@@ -154,6 +154,8 @@ export function InquiryForm() {
           </label>
           <input
             id="name"
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? "name-error" : undefined}
             name="name"
             type="text"
             required
@@ -165,7 +167,7 @@ export function InquiryForm() {
             placeholder="Your full name"
           />
           {errors.name && (
-            <span className="text-xs text-red-400 font-mono">{errors.name}</span>
+            <span id="name-error" role="alert" className="text-xs text-theme-danger font-mono">{errors.name}</span>
           )}
         </div>
 
@@ -176,6 +178,8 @@ export function InquiryForm() {
           </label>
           <input
             id="email"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "email-error" : undefined}
             name="email"
             type="email"
             required
@@ -187,7 +191,7 @@ export function InquiryForm() {
             placeholder="client@hospitalitybrand.com"
           />
           {errors.email && (
-            <span className="text-xs text-red-400 font-mono">{errors.email}</span>
+            <span id="email-error" role="alert" className="text-xs text-theme-danger font-mono">{errors.email}</span>
           )}
         </div>
 
@@ -198,6 +202,8 @@ export function InquiryForm() {
           </label>
           <input
             id="property"
+            aria-invalid={!!errors.property}
+            aria-describedby={errors.property ? "property-error" : undefined}
             name="property"
             type="text"
             required
@@ -211,7 +217,7 @@ export function InquiryForm() {
             placeholder="Resort Name (e.g. resort.com)"
           />
           {errors.property && (
-            <span className="text-xs text-red-400 font-mono">{errors.property}</span>
+            <span id="property-error" role="alert" className="text-xs text-theme-danger font-mono">{errors.property}</span>
           )}
         </div>
 
@@ -222,6 +228,8 @@ export function InquiryForm() {
           </label>
           <input
             id="location"
+            aria-invalid={!!errors.location}
+            aria-describedby={errors.location ? "location-error" : undefined}
             name="location"
             type="text"
             required
@@ -235,7 +243,7 @@ export function InquiryForm() {
             placeholder="e.g. Goa, India or International"
           />
           {errors.location && (
-            <span className="text-xs text-red-400 font-mono">{errors.location}</span>
+            <span id="location-error" role="alert" className="text-xs text-theme-danger font-mono">{errors.location}</span>
           )}
         </div>
       </div>
@@ -272,7 +280,7 @@ export function InquiryForm() {
           })}
         </div>
         {errors.services && (
-          <span className="text-xs text-red-400 font-mono">{errors.services}</span>
+          <span id="services-error" role="alert" className="text-xs text-theme-danger font-mono">{errors.services}</span>
         )}
       </div>
 
@@ -283,6 +291,8 @@ export function InquiryForm() {
         </label>
         <input
           id="timeline"
+          aria-invalid={!!errors.timeline}
+          aria-describedby={errors.timeline ? "timeline-error" : undefined}
           name="timeline"
           type="text"
           required
@@ -296,7 +306,7 @@ export function InquiryForm() {
           placeholder="e.g. Next month, Q4 2026, or Specific dates"
         />
         {errors.timeline && (
-          <span className="text-xs text-red-400 font-mono">{errors.timeline}</span>
+          <span id="timeline-error" role="alert" className="text-xs text-theme-danger font-mono">{errors.timeline}</span>
         )}
       </div>
 
@@ -307,6 +317,8 @@ export function InquiryForm() {
         </label>
         <textarea
           id="message"
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "message-error" : undefined}
           name="message"
           rows={5}
           required
@@ -320,7 +332,7 @@ export function InquiryForm() {
           placeholder="Tell us about the property, vision, and specific deliverables needed..."
         />
         {errors.message && (
-          <span className="text-xs text-red-400 font-mono">{errors.message}</span>
+          <span id="message-error" role="alert" className="text-xs text-theme-danger font-mono">{errors.message}</span>
         )}
       </div>
 
@@ -330,8 +342,8 @@ export function InquiryForm() {
           <div
             className={`p-4 border text-sm flex items-center gap-3 ${
               statusMessage.type === "success"
-                ? "border-emerald-500/50 bg-emerald-950/20 text-emerald-400"
-                : "border-red-500/50 bg-red-950/20 text-red-400"
+                ? "border-theme-success/50 bg-theme-success/10 text-theme-success"
+                : "border-theme-danger/50 bg-theme-danger/10 text-theme-danger"
             }`}
           >
             <span>{statusMessage.type === "success" ? "✓" : "⚠"}</span>
@@ -347,7 +359,7 @@ export function InquiryForm() {
           disabled={isSubmitting}
           className="label inline-flex items-center justify-center gap-2 border border-theme-ink bg-theme-ink px-8 py-4 text-theme-bg text-[11px] font-medium tracking-widest transition-all duration-100 active:scale-[0.97] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent"
         >
-          {isSubmitting ? "TRANSMITTING INQUIRY..." : "SEND INQUIRY"}
+          {isSubmitting ? "SENDING…" : "SEND INQUIRY"}
         </button>
       </div>
     </form>

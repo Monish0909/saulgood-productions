@@ -105,7 +105,7 @@ export function WhySaulGood() {
       <div className="mx-auto max-w-7xl flex flex-col gap-16 md:gap-20">
         {/* Section Heading */}
         <div className="why-heading-reveal max-w-4xl flex flex-col gap-4">
-          <span className="label text-theme-accent">
+          <span className="label text-theme-accent-ink">
             THE SAULGOOD STANDARD
           </span>
           <h2 className="display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-theme-ink tracking-tight leading-[1.08]">
@@ -126,7 +126,7 @@ export function WhySaulGood() {
               }`}
             >
               <div className="flex items-baseline gap-3">
-                <span className="font-mono text-xs text-theme-accent font-medium">
+                <span className="font-mono text-xs text-theme-accent-ink font-medium">
                   [0{index + 1}]
                 </span>
                 <h3 className="font-serif text-lg md:text-xl font-normal text-theme-ink tracking-wide uppercase">

@@ -140,7 +140,7 @@ export function Specialisation() {
         {/* Header Block */}
         <div className="flex flex-col gap-6 max-w-4xl">
           <div className="spec-header-reveal">
-            <span className="label text-theme-accent">
+            <span className="label text-theme-accent-ink">
               {copy.specialisation.label}
             </span>
           </div>
@@ -175,7 +175,7 @@ export function Specialisation() {
                 >
                   {/* Large Numeral in Accent */}
                   <div className="flex items-baseline gap-4">
-                    <span className="font-serif text-4xl sm:text-5xl md:text-6xl font-light text-theme-accent tracking-tighter">
+                    <span className="font-serif text-4xl sm:text-5xl md:text-6xl font-light text-theme-accent-ink tracking-tighter">
                       {service.number}
                     </span>
                     <span className="label text-[10px] text-theme-muted tracking-[0.25em]">
@@ -189,7 +189,7 @@ export function Specialisation() {
                   </h3>
 
                   {/* Italic Serif Tagline */}
-                  <p className="font-serif text-lg sm:text-xl text-theme-accent italic leading-snug">
+                  <p className="font-serif text-lg sm:text-xl text-theme-accent-ink italic leading-snug">
                     {service.tagline}
                   </p>
 

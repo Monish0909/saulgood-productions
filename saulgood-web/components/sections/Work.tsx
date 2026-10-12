@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { copy } from "@/content/copy";
 import { mediaManifest, MediaItem } from "@/content/media";
@@ -124,6 +124,8 @@ export function Work() {
     return () => ctx.revert();
   }, []);
 
+  const closeLightbox = useCallback(() => setIsLightboxOpen(false), []);
+
   const openLightbox = (key: string) => {
     setActiveCategoryKey(key);
     setIsLightboxOpen(true);
@@ -145,7 +147,7 @@ export function Work() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-theme-line/60 pb-12">
           <div className="flex flex-col gap-5 max-w-3xl">
             <div className="work-header-reveal">
-              <span className="label text-theme-accent">
+              <span className="label text-theme-accent-ink">
                 {copy.work.label}
               </span>
             </div>
@@ -191,8 +193,17 @@ export function Work() {
             return (
               <div
                 key={cat.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`Open ${cat.title} gallery`}
                 onClick={() => openLightbox(cat.id)}
-                className="category-card group cursor-pointer relative flex flex-col justify-between overflow-hidden border border-theme-line bg-theme-surface aspect-[3/4] md:aspect-[2/3] transition-all hover:border-theme-accent active:scale-[0.98]"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openLightbox(cat.id);
+                  }
+                }}
+                className="category-card group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-ink focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg relative flex flex-col justify-between overflow-hidden border border-theme-line bg-theme-surface aspect-[3/4] md:aspect-[2/3] transition-all hover:border-theme-accent active:scale-[0.98]"
               >
                 {/* Background Image with Hover Scale 1.04 */}
                 <div className="absolute inset-0 overflow-hidden">
@@ -215,20 +226,20 @@ export function Work() {
                   <span className="label text-[10px] text-white/70 tracking-widest">
                     0{index + 1}
                   </span>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#C08A4B] bg-black/40 px-2.5 py-1 backdrop-blur-sm border border-white/10">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-theme-photo-accent bg-black/40 px-2.5 py-1 backdrop-blur-sm border border-white/10">
                     {data.images.length} FRAMES
                   </span>
                 </div>
 
                 {/* Bottom title & tagline */}
                 <div className="relative z-10 p-6 flex flex-col gap-2">
-                  <h3 className="font-serif text-2xl md:text-3xl font-light text-white tracking-tight group-hover:text-[#F3EDE2]">
+                  <h3 className="font-serif text-2xl md:text-3xl font-light text-white tracking-tight group-hover:text-theme-photo-ink">
                     {cat.title}
                   </h3>
                   <p className="font-serif text-sm text-white/80 italic line-clamp-2">
                     {cat.description}
                   </p>
-                  <div className="pt-2 flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-widest text-[#C08A4B]">
+                  <div className="pt-2 flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-widest text-theme-photo-accent">
                     <span>VIEW GALLERY</span>
                     <span className="transition-transform group-hover:translate-x-1">→</span>
                   </div>
@@ -240,12 +251,14 @@ export function Work() {
       </div>
 
       {/* Fullscreen Lightbox Gallery */}
-      <Lightbox
-        isOpen={isLightboxOpen}
-        onClose={() => setIsLightboxOpen(false)}
-        images={currentGallery.images}
-        categoryTitle={currentGallery.title}
-      />
+      {isLightboxOpen && (
+        <Lightbox
+          isOpen
+          onClose={closeLightbox}
+          images={currentGallery.images}
+          categoryTitle={currentGallery.title}
+        />
+      )}
     </section>
   );
 }

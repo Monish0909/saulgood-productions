@@ -109,7 +109,7 @@ export function CreativeStandard() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           <div className="lg:col-span-7 flex flex-col gap-6">
             <div className="cs-header-reveal">
-              <span className="label text-theme-accent">
+              <span className="label text-theme-accent-ink">
                 {copy.creativeStandard.label}
               </span>
             </div>
@@ -146,7 +146,7 @@ export function CreativeStandard() {
               className="pillar-card border-r border-b border-theme-line/70 p-8 md:p-10 lg:p-12 flex flex-col justify-between gap-8 bg-theme-surface/30 hover:bg-theme-surface/60 transition-colors group"
             >
               <div className="flex items-center justify-between">
-                <span className="font-serif text-3xl md:text-4xl font-light text-theme-accent">
+                <span className="font-serif text-3xl md:text-4xl font-light text-theme-accent-ink">
                   0{pillar.id}
                 </span>
                 <span className="label text-[9px] text-theme-muted tracking-[0.25em] opacity-60 group-hover:opacity-100 transition-opacity">

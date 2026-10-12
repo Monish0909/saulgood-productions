@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/dev/ThemeProvider";
-import { ThemeToggle } from "@/components/dev/ThemeToggle";
+import { siteUrl } from "@/lib/site";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollEffects } from "@/components/layout/ScrollEffects";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -22,16 +22,13 @@ const hanken = Hanken_Grotesk({
 });
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F6F2EA" },
-    { media: "(prefers-color-scheme: dark)", color: "#0B0A09" },
-  ],
+  themeColor: "#F6F2EA",
   width: "device-width",
   initialScale: 1,
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://saulgoodproductions.com"),
+  metadataBase: new URL(siteUrl),
   title: "SAULGOOD PRODUCTIONS | Hospitality Visual Production Studio",
   description:
     "Specialist hospitality visual production studio in India. Premium Photography, Cinematic Videography, and Aerial Visuals for luxury hotels, resorts, and villas.",
@@ -47,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://saulgoodproductions.com",
+    url: siteUrl,
     siteName: "SaulGood Productions",
     title: "SAULGOOD PRODUCTIONS | Hospitality Visual Production Studio",
     description:
@@ -69,7 +66,7 @@ export const metadata: Metadata = {
     images: ["/media/placeholder/resort.jpg"],
   },
   alternates: {
-    canonical: "https://saulgoodproductions.com",
+    canonical: siteUrl,
   },
   icons: {
     icon: "/favicon.ico",
@@ -81,8 +78,7 @@ const jsonLd = {
   "@type": "Organization",
   name: "SaulGood Productions LLP",
   alternateName: "SaulGood Productions",
-  url: "https://saulgoodproductions.com",
-  logo: "https://saulgoodproductions.com/media/placeholder/resort.jpg",
+  url: siteUrl,
   description:
     "Specialist hospitality visual production studio focused on premium photography, cinematic videography, and aerial visuals for luxury hotels, resorts, and villas.",
   email: "saulgoodproductions@gmail.com",
@@ -112,35 +108,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
       className={`${cormorant.variable} ${hanken.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                const params = new URLSearchParams(window.location.search);
-                const q = params.get('theme');
-                if (q === 'light' || q === 'dark') {
-                  document.documentElement.setAttribute('data-theme', q);
-                } else {
-                  const stored = localStorage.getItem('sgp-theme');
-                  if (stored === 'light' || stored === 'dark') {
-                    document.documentElement.setAttribute('data-theme', stored);
-                  }
-                }
-              } catch (_) {}
-            `,
-          }}
-        />
-        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-theme-bg text-theme-ink overflow-x-hidden selection:bg-theme-accent selection:text-theme-bg">
+      <body className="min-h-full flex flex-col bg-theme-bg text-theme-ink overflow-x-clip selection:bg-theme-accent selection:text-theme-bg">
         {/* Accessible skip link */}
         <a
           href="#main-content"
@@ -148,16 +125,14 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <ThemeProvider>
-          <SmoothScrollProvider>
-            <Nav />
-            <main id="main-content" className="flex-1 w-full">
-              {children}
-            </main>
-            <Footer />
-            <ThemeToggle />
-          </SmoothScrollProvider>
-        </ThemeProvider>
+        <SmoothScrollProvider>
+          <ScrollEffects />
+          <Nav />
+          <main id="main-content" className="flex-1 w-full">
+            {children}
+          </main>
+          <Footer />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

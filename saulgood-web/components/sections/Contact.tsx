@@ -77,12 +77,12 @@ export function Contact() {
         <div className="lg:col-span-5 flex flex-col gap-10">
           <div className="flex flex-col gap-5">
             <div className="contact-reveal">
-              <span className="label text-theme-accent">
+              <span className="label text-theme-accent-ink">
                 {copy.contact.label}
               </span>
             </div>
             <div className="contact-reveal">
-              <h2 className="display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-theme-ink tracking-tight leading-[1.08]">
+              <h2 className="display [overflow-wrap:anywhere] hyphens-auto text-3xl sm:text-4xl md:text-4xl xl:text-5xl font-light text-theme-ink tracking-tight leading-[1.08]">
                 {copy.contact.heading}
               </h2>
             </div>
@@ -95,7 +95,7 @@ export function Contact() {
 
           <div className="flex flex-col gap-4 text-theme-muted font-light leading-relaxed text-sm md:text-base">
             <p className="contact-reveal">{copy.contact.body}</p>
-            <p className="contact-reveal font-serif text-lg text-theme-accent italic">
+            <p className="contact-reveal font-serif text-lg text-theme-accent-ink italic">
               {copy.contact.closer}
             </p>
           </div>
@@ -114,16 +114,13 @@ export function Contact() {
 
           {/* Company Block & Mailto */}
           <div className="contact-reveal border-t border-theme-line/70 pt-8 flex flex-col gap-3">
-            <span className="label text-[10px] text-theme-muted tracking-widest">
-              OFFICIAL PRODUCTION STUDIO
-            </span>
             <p className="text-xs text-theme-muted font-mono leading-relaxed">
               {copy.contact.companyBlock}
             </p>
             <div className="pt-2">
               <a
                 href={`mailto:${copy.brand.email}`}
-                className="text-sm font-mono text-theme-accent hover:underline flex items-center gap-1.5"
+                className="text-sm font-mono text-theme-accent-ink hover:underline inline-flex min-h-[44px] items-center gap-1.5"
               >
                 <span>✉</span>
                 <span>{copy.brand.email}</span>

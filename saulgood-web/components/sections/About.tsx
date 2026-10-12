@@ -105,7 +105,7 @@ export function About() {
         {/* Text Narrative Column (7 Cols) */}
         <div className="lg:col-span-7 flex flex-col gap-8">
           <div className="about-reveal">
-            <span className="label text-theme-accent">
+            <span className="label text-theme-accent-ink">
               {copy.about.label}
             </span>
           </div>
@@ -127,7 +127,7 @@ export function About() {
 
           {/* Closer line in Accent */}
           <div className="about-reveal border-l-2 border-theme-accent pl-6 py-2 mt-2">
-            <p className="font-serif text-lg md:text-xl text-theme-accent italic tracking-wide">
+            <p className="font-serif text-lg md:text-xl text-theme-accent-ink italic tracking-wide">
               {copy.about.closer}
             </p>
           </div>

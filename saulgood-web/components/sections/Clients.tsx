@@ -110,7 +110,7 @@ export function Clients() {
         {/* Header Block: Label, Heading, Body */}
         <div className="flex flex-col gap-6 max-w-4xl">
           <div className="clients-header-reveal">
-            <span className="label text-theme-accent">
+            <span className="label text-theme-accent-ink">
               {copy.clients.label}
             </span>
           </div>

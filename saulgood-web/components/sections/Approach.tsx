@@ -108,7 +108,7 @@ export function Approach() {
         {/* Header Block: Label and Heading */}
         <div className="flex flex-col gap-6 max-w-4xl">
           <div className="approach-header-reveal">
-            <span className="label text-theme-accent">
+            <span className="label text-theme-accent-ink">
               {copy.approach.label}
             </span>
           </div>
@@ -134,7 +134,7 @@ export function Approach() {
               {/* Top: Step numeral and connector pin */}
               <div className="flex flex-col gap-6">
                 <div className="flex items-center justify-between border-b border-theme-line/40 pb-4">
-                  <span className="font-serif text-3xl md:text-4xl font-light text-theme-accent tracking-tighter">
+                  <span className="font-serif text-3xl md:text-4xl font-light text-theme-accent-ink tracking-tighter">
                     {stepItem.step}
                   </span>
                   <span className="h-1.5 w-1.5 rounded-full bg-theme-accent/60 group-hover:bg-theme-accent transition-colors" />

@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useSyncExternalStore } from "react";
 import { copy } from "@/content/copy";
 
 export function Footer() {
-  const [currentYear, setCurrentYear] = useState<number>(2025);
-
-  useEffect(() => {
-    setCurrentYear(new Date().getFullYear());
-  }, []);
+  // Server renders the fallback year; client swaps in the real one (no prerender Date read)
+  const currentYear = useSyncExternalStore(
+    () => () => {},
+    () => new Date().getFullYear(),
+    () => 2025
+  );
 
   return (
     <footer
@@ -38,7 +39,7 @@ export function Footer() {
 
         {/* Dynamic Legal Copyright */}
         <div className="flex flex-col items-start md:items-end gap-2 border-t md:border-t-0 border-theme-line/60 pt-6 md:pt-0 w-full md:w-auto">
-          <p className="text-xs font-mono text-theme-muted tracking-wider">
+          <p suppressHydrationWarning className="text-xs font-mono text-theme-muted tracking-wider">
             © {currentYear} {copy.brand.legalName}. All Rights Reserved.
           </p>
           <span className="text-[10px] font-mono tracking-widest text-theme-muted uppercase">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,20 +8,19 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 interface SmoothScrollContextType {
-  lenis: Lenis | null;
   scrollTo: (
     target: string | number | HTMLElement,
     options?: { offset?: number; duration?: number }
   ) => void;
 }
 
+const NAV_OFFSET = -72;
+
 const SmoothScrollContext = createContext<SmoothScrollContextType>({
-  lenis: null,
   scrollTo: () => {},
 });
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
-  const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
@@ -39,7 +38,6 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     });
 
     lenisRef.current = lenis;
-    setLenisInstance(lenis);
 
     // Sync Lenis with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
@@ -55,7 +53,6 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       gsap.ticker.remove(tickerCallback);
       lenis.destroy();
       lenisRef.current = null;
-      setLenisInstance(null);
     };
   }, []);
 
@@ -63,28 +60,29 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     target: string | number | HTMLElement,
     options?: { offset?: number; duration?: number }
   ) => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isAnchor = typeof target === "string" && target.startsWith("#");
+    const offset = options?.offset ?? (isAnchor ? NAV_OFFSET : 0);
+
     if (lenisRef.current) {
-      lenisRef.current.scrollTo(target, {
-        offset: options?.offset ?? 0,
-        duration: options?.duration ?? 1.2,
-      });
-    } else {
-      // Fallback for native scrolling or prefers-reduced-motion
-      if (typeof target === "number") {
-        window.scrollTo({ top: target, behavior: "smooth" });
-      } else if (typeof target === "string") {
-        const el = document.querySelector(target);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
-        }
-      } else if (target) {
-        target.scrollIntoView({ behavior: "smooth" });
-      }
+      lenisRef.current.scrollTo(target, { offset, duration: options?.duration ?? 1.2 });
+      return;
+    }
+    // Native fallback (reduced motion / before Lenis mounts): instant, offset-aware
+    const behavior: ScrollBehavior = reduced ? "auto" : "smooth";
+    if (typeof target === "number") {
+      window.scrollTo({ top: target, behavior });
+      return;
+    }
+    const el = typeof target === "string" ? document.querySelector(target) : target;
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY + offset;
+      window.scrollTo({ top, behavior });
     }
   };
 
   return (
-    <SmoothScrollContext.Provider value={{ lenis: lenisInstance, scrollTo }}>
+    <SmoothScrollContext.Provider value={{ scrollTo }}>
       {children}
     </SmoothScrollContext.Provider>
   );

@@ -24,12 +24,11 @@ export function Lightbox({
   const touchStartXRef = useRef<number | null>(null);
   const touchEndXRef = useRef<number | null>(null);
 
-  // Sync index when initialIndex changes or modal opens
+  // Remember the trigger so focus returns to it on close (parent mounts this only while open)
   useEffect(() => {
-    if (isOpen) {
-      setCurrentIndex(initialIndex);
-    }
-  }, [isOpen, initialIndex]);
+    const trigger = document.activeElement as HTMLElement | null;
+    return () => trigger?.focus?.();
+  }, []);
 
   const handleNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -130,7 +129,7 @@ export function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-label={`${categoryTitle ?? "Portfolio"} Lightbox Gallery`}
-      className="fixed inset-0 z-50 flex flex-col justify-between bg-black/95 text-[#F3EDE2] backdrop-blur-2xl transition-all"
+      className="fixed inset-0 z-50 flex flex-col justify-between bg-black/95 text-theme-photo-ink backdrop-blur-2xl transition-all"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -144,7 +143,7 @@ export function Lightbox({
       {/* Top Bar */}
       <div className="flex items-center justify-between px-6 py-6 border-b border-white/10">
         <div className="flex items-center gap-4">
-          <span className="label text-[10px] text-theme-accent tracking-widest">
+          <span className="label text-[10px] text-theme-photo-accent tracking-widest">
             {categoryTitle}
           </span>
           <span className="font-mono text-xs text-white/50">

@@ -16,24 +16,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. Parse & Validate Body
+    // 2. Parse body, then honeypot BEFORE validation (bots get a silent 200)
     const body = await req.json();
-    const result = inquirySchema.safeParse(body);
+    if (body && typeof body._hp_company === "string" && body._hp_company.length > 0) {
+      console.warn("[SPAM BOT DETECTED VIA HONEYPOT]");
+      return NextResponse.json({ success: true, message: "Inquiry received." });
+    }
 
+    // 3. Validate
+    const result = inquirySchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json(
         { error: "Validation failed", details: result.error.flatten().fieldErrors },
         { status: 400 }
       );
     }
-
     const data = result.data;
-
-    // 3. Honeypot check (if _hp_company has any value, silently fail / return 200)
-    if (data._hp_company && data._hp_company.length > 0) {
-      console.warn("[SPAM BOT DETECTED VIA HONEYPOT]");
-      return NextResponse.json({ success: true, message: "Inquiry received." });
-    }
 
     // 4. Send email via Resend if RESEND_API_KEY is configured, else console.log
     const resendApiKey = process.env.RESEND_API_KEY;
@@ -68,9 +66,17 @@ ${data.message}
         if (!response.ok) {
           const errData = await response.text();
           console.error("[RESEND ERROR]", errData);
+          return NextResponse.json(
+            { error: "We could not send your inquiry. Please email saulgoodproductions@gmail.com directly." },
+            { status: 502 }
+          );
         }
       } catch (emailErr) {
         console.error("[EMAIL DISPATCH ERROR]", emailErr);
+        return NextResponse.json(
+          { error: "We could not send your inquiry. Please email saulgoodproductions@gmail.com directly." },
+          { status: 502 }
+        );
       }
     } else {
       console.log("------------------------------------------");

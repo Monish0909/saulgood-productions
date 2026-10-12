@@ -1,0 +1,11 @@
+{
+  "name": "saulgood-productions",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix saulgood-web run dev",
+    "build": "npm --prefix saulgood-web run build",
+    "start": "npm --prefix saulgood-web run start",
+    "lint": "npm --prefix saulgood-web run lint"
+  }
+}

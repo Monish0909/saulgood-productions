@@ -13,6 +13,9 @@ export function checkRateLimit(ip: string, limit = 5, windowMs = 60 * 60 * 1000)
   remaining: number;
 } {
   const now = Date.now();
+  if (rateLimitMap.size > 500) {
+    for (const [k, v] of rateLimitMap) if (now > v.resetAt) rateLimitMap.delete(k);
+  }
   const record = rateLimitMap.get(ip);
 
   // Clean up if expired

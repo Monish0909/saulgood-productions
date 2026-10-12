@@ -1,5 +1,3 @@
-"use client";
-
 import { Hero } from "@/components/sections/Hero";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { About } from "@/components/sections/About";
@@ -10,12 +8,17 @@ import { Approach } from "@/components/sections/Approach";
 import { WhySaulGood } from "@/components/sections/WhySaulGood";
 import { Clients } from "@/components/sections/Clients";
 import { Contact } from "@/components/sections/Contact";
+import { Marquee } from "@/components/sections/Marquee";
+import { ImageBand } from "@/components/sections/ImageBand";
+import { mediaManifest } from "@/content/media";
 
 export default function Home() {
   return (
     <div className="flex flex-col">
       {/* 1. Hero */}
       <Hero />
+
+      <Marquee />
 
       {/* 2. Philosophy */}
       <Philosophy />
@@ -28,6 +31,8 @@ export default function Home() {
 
       {/* 5. Creative Standard */}
       <CreativeStandard />
+
+      <ImageBand image={mediaManifest.services.aerial} />
 
       {/* 6. Work & Lightbox Gallery */}
       <Work />

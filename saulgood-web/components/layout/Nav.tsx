@@ -21,6 +21,7 @@ export function Nav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const lastScrollYRef = useRef(0);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
 
   // Scroll direction detection (hide on scroll down, show on scroll up)
   useEffect(() => {
@@ -58,6 +59,7 @@ export function Nav() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isMobileMenuOpen) {
         setIsMobileMenuOpen(false);
+        hamburgerRef.current?.focus();
       }
     };
 
@@ -117,6 +119,7 @@ export function Nav() {
   return (
     <>
       <header
+        onFocusCapture={() => setIsVisible(true)}
         className={`fixed top-0 left-0 right-0 z-40 transition-transform duration-300 ease-out ${
           isVisible ? "translate-y-0" : "-translate-y-full"
         }`}
@@ -169,6 +172,7 @@ export function Nav() {
 
           {/* Mobile Hamburger Button (Accessible 44x44 tap target) */}
           <button
+            ref={hamburgerRef}
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden flex h-11 w-11 flex-col items-center justify-center gap-1.5 p-2 text-theme-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent cursor-pointer"

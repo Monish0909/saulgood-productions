@@ -71,7 +71,7 @@ export function Philosophy() {
       >
         {/* Label */}
         <div className="philosophy-reveal">
-          <span className="label text-theme-accent">
+          <span className="label text-theme-accent-ink">
             {copy.philosophy.label}
           </span>
         </div>
@@ -94,7 +94,7 @@ export function Philosophy() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pt-4">
           {copy.philosophy.paragraphs.map((p, index) => (
             <div key={index} className="philosophy-reveal flex flex-col gap-3">
-              <span className="text-[11px] font-mono text-theme-accent/80 tracking-widest">
+              <span className="text-[11px] font-mono text-theme-accent-ink/80 tracking-widest">
                 0{index + 1}
               </span>
               <p className="text-sm md:text-base text-theme-muted font-light leading-relaxed">

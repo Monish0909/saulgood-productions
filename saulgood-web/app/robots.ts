@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next";
+import { siteUrl } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://saulgoodproductions.com";
+  const baseUrl = siteUrl;
 
   return {
     rules: {
