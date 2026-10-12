@@ -4,6 +4,8 @@ import Image from "next/image";
 import { copy } from "@/content/copy";
 import { mediaManifest } from "@/content/media";
 import { Hero } from "@/components/sections/Hero";
+import { Philosophy } from "@/components/sections/Philosophy";
+import { About } from "@/components/sections/About";
 
 export default function Home() {
   return (
@@ -11,42 +13,14 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
+      {/* Philosophy Section */}
+      <Philosophy />
+
+      {/* About Section */}
+      <About />
+
       {/* Main Content Flow */}
       <main className="px-6 md:px-16 lg:px-24 max-w-7xl mx-auto flex flex-col gap-32 py-24 w-full">
-        {/* Philosophy Section */}
-        <section id="about" className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start pt-12">
-          <div className="flex flex-col gap-4">
-            <span className="label text-theme-accent">
-              {copy.philosophy.label}
-            </span>
-            <h2 className="text-2xl md:text-3xl font-serif tracking-tight text-theme-ink">
-              {copy.philosophy.heading}
-            </h2>
-            <p className="text-theme-muted italic text-lg">
-              {copy.philosophy.lead}
-            </p>
-            <p className="text-theme-ink/80 text-sm md:text-base leading-relaxed">
-              {copy.philosophy.paragraphs[0]}
-            </p>
-          </div>
-
-          {/* Media Placeholder Proof */}
-          <div className="flex flex-col gap-4">
-            <div className="relative aspect-[16/10] w-full overflow-hidden border border-theme-line bg-theme-surface">
-              <Image
-                src={mediaManifest.heroMosaic[0].src}
-                alt={mediaManifest.heroMosaic[0].alt}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="flex items-center justify-between text-xs text-theme-muted border-t border-theme-line pt-3">
-              <span>Asset: {mediaManifest.heroMosaic[0].src}</span>
-              <span className="label text-[10px]">VERIFIED VIA MANIFEST</span>
-            </div>
-          </div>
-        </section>
-
         {/* Services Section Anchor Target */}
         <section id="services" className="border-t border-theme-line pt-16 flex flex-col gap-6">
           <span className="label text-theme-accent">{copy.specialisation.label}</span>
