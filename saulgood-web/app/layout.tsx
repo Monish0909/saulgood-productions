@@ -3,6 +3,8 @@ import { Cormorant_Garamond, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/dev/ThemeProvider";
 import { ThemeToggle } from "@/components/dev/ThemeToggle";
+import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
+import { Nav } from "@/components/layout/Nav";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -58,8 +60,11 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-theme-bg text-theme-ink">
         <ThemeProvider>
-          {children}
-          <ThemeToggle />
+          <SmoothScrollProvider>
+            <Nav />
+            {children}
+            <ThemeToggle />
+          </SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>
