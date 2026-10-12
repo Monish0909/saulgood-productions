@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/dev/ThemeProvider";
 import { ThemeToggle } from "@/components/dev/ThemeToggle";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { Nav } from "@/components/layout/Nav";
+import { Footer } from "@/components/layout/Footer";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -63,6 +64,7 @@ export default function RootLayout({
           <SmoothScrollProvider>
             <Nav />
             {children}
+            <Footer />
             <ThemeToggle />
           </SmoothScrollProvider>
         </ThemeProvider>
